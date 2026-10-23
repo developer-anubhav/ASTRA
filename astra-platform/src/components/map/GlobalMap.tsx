@@ -44,6 +44,15 @@ export function GlobalMap({
   React.useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
+    // Explicitly configure worker URL for Next.js / Turbopack
+    try {
+      if (typeof window !== 'undefined') {
+        maplibregl.setWorkerUrl('/maplibre-gl-worker.js');
+      }
+    } catch {
+      // Fallback
+    }
+
     // Use a clean dark vector style (free OpenStreetMap / Demotiles or standard schema)
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
