@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
+/* ─── ASTRA Design System ─────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core surfaces */
+  --astra-bg-base: #0a0c0f;
+  --astra-bg-surface: #0f1117;
+  --astra-bg-elevated: #141820;
+  --astra-bg-overlay: #1a2030;
+  --astra-bg-hover: #1e2535;
+
+  /* Borders */
+  --astra-border: #1e2535;
+  --astra-border-subtle: #141820;
+  --astra-border-bright: #2a3548;
+
+  /* Accent — cyan/teal system */
+  --astra-accent: #00c8d7;
+  --astra-accent-dim: #008fa0;
+  --astra-accent-muted: rgba(0, 200, 215, 0.12);
+  --astra-accent-glow: rgba(0, 200, 215, 0.08);
+
+  /* CORTEX accent — slightly warmer blue */
+  --cortex-accent: #4d9fff;
+  --cortex-accent-dim: #2d6cbf;
+  --cortex-accent-muted: rgba(77, 159, 255, 0.12);
+
+  /* Status */
+  --status-active: #22c55e;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+  --status-info: #3b82f6;
+  --status-unknown: #6b7280;
+
+  /* Severity */
+  --sev-critical: #ef4444;
+  --sev-high: #f97316;
+  --sev-medium: #f59e0b;
+  --sev-low: #22c55e;
+  --sev-info: #6b7280;
+
+  /* Typography */
+  --astra-text-primary: #e8eaf0;
+  --astra-text-secondary: #8895a8;
+  --astra-text-muted: #4a5568;
+  --astra-text-accent: #00c8d7;
+
+  /* Provenance colors */
+  --prov-demo: #9333ea;
+  --prov-live: #22c55e;
+  --prov-cached: #f59e0b;
+  --prov-propagated: #3b82f6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--astra-bg-base);
+  --color-foreground: var(--astra-text-primary);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Reset ──────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--astra-bg-base);
+  color: var(--astra-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  overflow: hidden;
 }
+
+/* ─── Scrollbars ──────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--astra-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--astra-border-bright);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--astra-accent-dim);
+}
+
+/* ─── Focus Indicators (accessible) ──────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--astra-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ─── MapLibre overrides ──────────────────────────────────────────────────── */
+
+.maplibregl-ctrl-logo {
+  display: none !important;
+}
+
+.maplibregl-ctrl-attrib {
+  background: rgba(10, 12, 15, 0.85) !important;
+  color: var(--astra-text-muted) !important;
+  font-size: 10px !important;
+}
+
+.maplibregl-popup-content {
+  background: var(--astra-bg-elevated) !important;
+  color: var(--astra-text-primary) !important;
+  border: 1px solid var(--astra-border) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+.maplibregl-popup-tip {
+  border-top-color: var(--astra-bg-elevated) !important;
+  border-bottom-color: var(--astra-bg-elevated) !important;
+}
+
+/* ─── Recharts overrides ──────────────────────────────────────────────────── */
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--astra-border) !important;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+/* ─── Utility classes ─────────────────────────────────────────────────────── */
+
+.astra-surface {
+  background: var(--astra-bg-surface);
+  border: 1px solid var(--astra-border);
+}
+
+.astra-elevated {
+  background: var(--astra-bg-elevated);
+  border: 1px solid var(--astra-border);
+}
+
+.astra-panel {
+  background: var(--astra-bg-surface);
+  border: 1px solid var(--astra-border);
+  border-radius: 6px;
+}
+
+.astra-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--astra-text-secondary);
+}
+
+.astra-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  background: rgba(147, 51, 234, 0.15);
+  border: 1px solid rgba(147, 51, 234, 0.4);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #c084fc;
+  text-transform: uppercase;
+}
+
+.cortex-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  background: rgba(77, 159, 255, 0.12);
+  border: 1px solid rgba(77, 159, 255, 0.35);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--cortex-accent);
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot.active { background: var(--status-active); }
+.status-dot.warning { background: var(--status-warning); }
+.status-dot.error { background: var(--status-error); }
+.status-dot.unknown { background: var(--status-unknown); }
+
+/* Animate a subtle pulse for active indicators */
+@keyframes astra-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.astra-pulse {
+  animation: astra-pulse 2s ease-in-out infinite;
+}
+
+/* Typing indicator for CORTEX */
+@keyframes cortex-thinking {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+.cortex-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cortex-accent);
+  animation: cortex-thinking 1.4s ease-in-out infinite;
+}
+
+.cortex-dot:nth-child(2) { animation-delay: 0.2s; }
+.cortex-dot:nth-child(3) { animation-delay: 0.4s; }
